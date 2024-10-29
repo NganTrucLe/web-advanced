@@ -23,21 +23,21 @@ const PhotosPage = () => {
 
 	const columns = getColumns();
 	const renderClassName = () => {
-		if (columns === 1) return "grid grid-cols-1 gap-4";
-		if (columns === 2) return "grid grid-cols-2 gap-4";
-		if (columns === 3) return "grid grid-cols-3 gap-4";
-		if (columns === 4) return "grid grid-cols-4 gap-4";
+		if (columns === 1) return "grid grid-cols-1 gap-4 w-full";
+		if (columns === 2) return "grid grid-cols-2 gap-4 w-full";
+		if (columns === 3) return "grid grid-cols-3 gap-4 w-full";
+		if (columns === 4) return "grid grid-cols-4 gap-4 w-full";
 	};
 
 	return (
 		<main className="pt-10 px-4 md:px-20 flex flex-col items-center">
-			<h1 className="text-6xl mb-10 font-bold uppercase">Photo gallery</h1>
+			<h1 className="text-2xl md:text-6xl mb-10 font-bold uppercase">Photo gallery</h1>
 			{isLoading ? (
 				<div>Loading...</div>
 			) : (
 				<div className={renderClassName()}>
 					{Array.from({ length: columns }).map((_, colIdx) => (
-						<div key={colIdx}>
+						<div key={colIdx} className="w-full flex-1">
 							{list
 								.filter((_, idx) => idx % columns === colIdx)
 								.map((file) => (

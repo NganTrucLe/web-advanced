@@ -12,7 +12,7 @@ const PhotoPage = () => {
 	if (isLoading) return <div>Loading...</div>;
 	if (isSuccess && data)
 		return (
-			<main className="px-20 flex flex-col pb-20">
+			<main className="px-4 md:px-20 flex flex-col pb-20">
 				<div className="sticky top-0 pt-10 bg-white z-10">
 					<Link
 						to="/photos"
@@ -25,13 +25,13 @@ const PhotoPage = () => {
 						<img
 							src={data.user.profile_image.medium}
 							alt={data.user.name}
-							className="rounded-full size-10 inline-block mr-2"
+							className="rounded-full size-8 md:size-10 inline-block mr-1 md:mr-2"
 						/>
 						<p>{data.user.name}</p>
 					</div>
 				</div>
 				<div className="flex items-center flex-col">
-					<div className="grid place-items-center">
+					<div className="grid w-full place-items-center">
 						{!isImageLoaded && (
 							<Blurhash
 								hash={data.blur_hash}
@@ -41,7 +41,7 @@ const PhotoPage = () => {
 								resolutionY={32}
 								punch={1}
 								style={{ aspectRatio: `${data.width}/${data.height}` }}
-								className="max-w-3/4 max-h-[40rem] object-cover rounded-md"
+								className="md:max-w-3/4 md:max-h-[40rem] object-cover rounded-md"
 							/>
 						)}
 						<img
@@ -49,11 +49,13 @@ const PhotoPage = () => {
 							alt={data.alt_description}
 							style={{ aspectRatio: `${data.width}/${data.height}` }}
 							srcSet={`${data.urls.thumb} 480w, ${data.urls.small} 800w, ${data.urls.regular} 1200w`}
-							className={`max-w-3/4 max-h-[40rem] object-cover rounded-md`}
+							className="md:max-w-3/4 md:max-h-[40rem] object-cover rounded-md"
 							onLoad={() => setIsImageLoaded(true)}
 						/>
 					</div>
-					<p className="mt-4 text-xl font-semibold">{data.description ?? data.alt_description}</p>
+					<p className="mt-4 text-base text-center md:text-xl font-semibold">
+						{data.description ?? data.alt_description}
+					</p>
 				</div>
 			</main>
 		);
