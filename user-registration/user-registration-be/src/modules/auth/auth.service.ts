@@ -1,13 +1,16 @@
-import { Account } from '@database/entities';
+import { AccountModel } from '@database/models';
 import { Injectable, Logger } from '@nestjs/common';
+import { SignUpDto } from 'libs/dtos';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
 
-  async registerUser(email: string, password: string) {
+  constructor(private readonly accountModel: AccountModel) {}
+
+  async registerUser(data: SignUpDto) {
     try {
-      await Account.save({ email, password });
+      await this.accountModel.save(data);
       return { message: 'User registered successfully' };
     } catch (error) {
       this.logger.error(error);
@@ -17,7 +20,7 @@ export class AuthService {
 
   async loginUser(email: string, password: string) {
     try {
-      const user = await Account.findOne({ where: { email, password } });
+      const user = await this.accountModel.findOne({ email, password });
       if (user) {
         return { message: 'User logged in successfully' };
       } else {

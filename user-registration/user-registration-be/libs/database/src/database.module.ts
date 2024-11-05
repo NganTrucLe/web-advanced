@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import * as dbEntites from './entities';
+import { MongooseModule } from '@nestjs/mongoose';
 const entities = (Object.keys(dbEntites) as Array<keyof typeof dbEntites>).map(
   (key) => dbEntites[key],
 );
@@ -18,6 +19,13 @@ const entities = (Object.keys(dbEntites) as Array<keyof typeof dbEntites>).map(
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
         entities,
+      }),
+      inject: [ConfigService],
+    }),
+    MongooseModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get('MONGO_URI'),
+        dbName: configService.get('MONGO_DB'),
       }),
       inject: [ConfigService],
     }),
