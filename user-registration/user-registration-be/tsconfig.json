@@ -19,9 +19,9 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@app/*": ["src/*"],
-      "@database/*": ["libs/database/src/*"],
-      "@utils/*": ["libs/utils/*"]
+      "@database/*": ["src/libs/database/src/*"],
+      "@utils/*": ["src/libs/utils/*"]
     }
   },
-  "include": ["src/**/*", "libs/**/*"]
+  "include": ["src/**/*", "src/libs/**/*"]
 }
