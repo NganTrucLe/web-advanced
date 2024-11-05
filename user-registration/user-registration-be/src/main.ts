@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-import { ThrowFirstErrorValidationPipe } from '@app/libs/utils/pipes';
+import { ThrowFirstErrorValidationPipe } from './libs/utils/pipes';
 import { AppModule } from './modules/app/app.module';
 
 async function bootstrap() {
