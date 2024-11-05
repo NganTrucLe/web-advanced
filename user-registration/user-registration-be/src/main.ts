@@ -15,7 +15,7 @@ async function bootstrap() {
       credentials: true,
     },
   });
-  const globalPrefix = 'api';
+  const globalPrefix = '';
 
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(ThrowFirstErrorValidationPipe);
@@ -28,7 +28,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('', app, document);
 
   const port = process.env.PORT || 3000;
   await app.listen(port);

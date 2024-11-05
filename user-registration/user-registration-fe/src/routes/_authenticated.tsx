@@ -2,8 +2,7 @@ import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 import ErrorFallback from "@/components/ErrorFallback";
 import DashboardLayout from "@/components/layouts/dashboard";
-import { authKeys } from "@/hooks/react-query/useAuth";
-import { getAuthValueFromStorage, signOut } from "@/services";
+import { getAuthValueFromStorage } from "@/services";
 
 const AuthenticatedPage = () => {
   return (

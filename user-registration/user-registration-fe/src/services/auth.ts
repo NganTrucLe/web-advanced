@@ -1,5 +1,5 @@
 import { FetchingData } from "@/lib/types/pagination";
-import api, { apiAuth } from "@/services/kyInstance";
+import { apiAuth } from "@/services/kyInstance";
 
 const delay = 500;
 const localStorageTokenKey = "auth_client_token";
