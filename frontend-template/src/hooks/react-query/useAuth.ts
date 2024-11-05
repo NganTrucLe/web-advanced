@@ -25,7 +25,7 @@ export const useSignIn = () => {
         variant: "default",
       });
     },
-    onError: (error) => {
+    onError: (error: { message: any; }) => {
       toast({
         title: "Error",
         description: error.message,
@@ -45,7 +45,7 @@ export const useSignOut = () => {
       navigate({ to: "/log-in" });
       queryClient.clear();
     },
-    onError: (error) => {
+    onError: (error: { message: any; }) => {
       toast({
         title: "Error",
         description: error.message,

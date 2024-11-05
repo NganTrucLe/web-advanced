@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
-import { signIn } from "@/services/auth";
+import { signIn, signUp } from "@/services/auth";
 
 import { useToast } from "../use-toast";
 
@@ -22,6 +22,29 @@ export const useSignIn = () => {
       toast({
         title: "Success",
         description: "You have successfully logged in",
+        variant: "default",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+};
+
+export const useSignUp = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: signUp,
+    onSuccess: () => {
+      navigate({ to: "/log-in" });
+      toast({
+        title: "Success",
+        description: "You have successfully signed up",
         variant: "default",
       });
     },

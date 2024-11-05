@@ -1,4 +1,3 @@
-import { FetchingData } from "@/lib/types/pagination";
 import { apiAuth } from "@/services/kyInstance";
 
 const delay = 500;
@@ -9,6 +8,12 @@ export type AuthInfo = {
 };
 
 type SignInParams = {
+  email: string;
+  password: string;
+};
+
+type SignUpParams = {
+  username: string;
   email: string;
   password: string;
 };
@@ -26,8 +31,13 @@ export const getAuthValueFromStorage = () => {
 };
 
 export const signIn = async (params: SignInParams) => {
-  const data = (await apiAuth.post("auth/signin", { json: params }).json<FetchingData<AuthInfo>>())
-    .data;
+  const data = await apiAuth.post("user/log-in", { json: params }).json<AuthInfo>();
+  localStorage.setItem(localStorageTokenKey, JSON.stringify(data));
+  return data;
+};
+
+export const signUp = async (params: SignUpParams) => {
+  const data = await apiAuth.post("user/register", { json: params }).json<AuthInfo>();
   localStorage.setItem(localStorageTokenKey, JSON.stringify(data));
   return data;
 };

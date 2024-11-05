@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { Input } from "@/components/ui/input";
-import { useSignIn } from "@/hooks/react-query/useAuth";
+import { useSignUp } from "@/hooks/react-query/useAuth";
 
 const formSchema = z
   .object({
@@ -43,13 +43,18 @@ export default function SignUpPage() {
       username: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
     resolver: zodResolver(formSchema),
   });
-  const signInMutation = useSignIn();
+  const signUpMutation = useSignUp();
 
   function onSubmit(data: FormInputs) {
-    signInMutation.mutate(data);
+    signUpMutation.mutate({
+      username: data.username,
+      email: data.email,
+      password: data.password,
+    });
   }
 
   return (
@@ -153,9 +158,9 @@ export default function SignUpPage() {
               type="submit"
               variant="default"
               className="mt-4 w-full bg-primary"
-              disabled={signInMutation.isPending}
+              disabled={signUpMutation.isPending}
             >
-              {signInMutation.isPending && (
+              {signUpMutation.isPending && (
                 <Loader2 className="mr-1 size-5 animate-spin text-white" />
               )}
               Sign up
