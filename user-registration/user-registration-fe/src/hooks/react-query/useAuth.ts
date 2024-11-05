@@ -1,7 +1,7 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
-import { signIn, signUp } from "@/services/auth";
+import { getUser, signIn, signUp } from "@/services/auth";
 
 import { useToast } from "../use-toast";
 
@@ -75,5 +75,12 @@ export const useSignOut = () => {
         variant: "destructive",
       });
     },
+  });
+};
+
+export const useUserProfile = () => {
+  return useQuery({
+    queryFn: getUser,
+    queryKey: authKeys.detail(),
   });
 };

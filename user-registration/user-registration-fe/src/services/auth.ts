@@ -1,4 +1,4 @@
-import { apiAuth } from "@/services/kyInstance";
+import api, { apiAuth } from "@/services/kyInstance";
 
 const delay = 500;
 const localStorageTokenKey = "auth_client_token";
@@ -19,7 +19,6 @@ type SignUpParams = {
 };
 
 export type AuthUser = {
-  id: string;
   username: string;
   email: string;
 };
@@ -49,4 +48,8 @@ export const signOut = () => {
       resolve(void 0);
     }, delay)
   );
+};
+
+export const getUser = async () => {
+  return api.get("user").json<AuthUser>();
 };

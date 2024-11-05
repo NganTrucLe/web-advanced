@@ -25,6 +25,20 @@ const api = ky.create({
   },
 });
 
-export const apiAuth = ky.create({ prefixUrl: BASE_URL });
+export const apiAuth = ky.create({
+  prefixUrl: BASE_URL,
+  hooks: {
+    afterResponse: [
+      async (_, __, response) => {
+        if (!response.ok) {
+          const body: {
+            message: string;
+          } = await response.json();
+          throw new Error(body.message);
+        }
+      },
+    ],
+  },
+});
 
 export default api;

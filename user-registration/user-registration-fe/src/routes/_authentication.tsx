@@ -1,6 +1,18 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { getAuthValueFromStorage } from "@/services";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authentication")({
+  beforeLoad: async () => {
+    try {
+      if (getAuthValueFromStorage()) {
+        return redirect({ to: "/" });
+      }
+      return true;
+    } catch (e) {
+      console.error(e);
+      return redirect({ to: "/log-in" });
+    }
+  },
   component: AuthLayout,
 });
 
