@@ -1,6 +1,6 @@
-import { AccountModel } from '@database/models';
+import { AccountModel } from '../../libs/database/src/models';
 import { Injectable, Logger } from '@nestjs/common';
-import { SignUpDto } from 'libs/dtos';
+import { SignUpDto } from '../../libs/dtos';
 
 @Injectable()
 export class AuthService {

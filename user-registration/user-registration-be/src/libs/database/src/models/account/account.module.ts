@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AccountModel } from './account.model';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AccountSchema, Account } from '@database/schemas';
+import { AccountSchema, Account } from '../../schemas';
 
 @Module({
   imports: [
