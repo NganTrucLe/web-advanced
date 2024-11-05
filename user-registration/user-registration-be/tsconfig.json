@@ -18,9 +18,9 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/*": ["src/*"],
-      "@database/*": ["src/libs/database/src/*"],
-      "@utils/*": ["src/libs/utils/*"]
+      "@app/*": ["./src/*"],
+      "@database/*": ["./src/libs/database/src/*"],
+      "@utils/*": ["./src/libs/utils/*"]
     }
   },
   "include": ["src/**/*", "src/libs/**/*"]
