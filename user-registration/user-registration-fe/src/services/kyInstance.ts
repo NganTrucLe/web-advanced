@@ -20,6 +20,7 @@ const api = ky.create({
           await signOut();
           redirect({ to: "/log-in" });
         }
+        return response;
       },
     ],
   },

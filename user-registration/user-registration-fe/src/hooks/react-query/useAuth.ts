@@ -82,5 +82,6 @@ export const useUserProfile = () => {
   return useQuery({
     queryFn: getUser,
     queryKey: authKeys.detail(),
+    retry: false,
   });
 };

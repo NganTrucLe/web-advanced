@@ -13,7 +13,7 @@ const WelcomeMessage = ({ username }: { username: string }) => {
       <div className="text-center text-2xl font-bold">Welcome to the home page, {username}!</div>
       <Confetti
         ref={confettiRef}
-        className="absolute left-0 top-0 z-0 size-full"
+        className="absolute left-0 top-0 -z-10 size-full"
         onMouseEnter={() => {
           confettiRef.current?.fire({});
         }}
