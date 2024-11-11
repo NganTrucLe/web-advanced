@@ -8,11 +8,11 @@ import { AppModule } from './modules/app/app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: {
-      origin: 'https://ia3-user-registration.vercel.app',
+      origin: process.env.CORS_ORIGIN,
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       preflightContinue: false,
       optionsSuccessStatus: 204,
-      credentials: false,
+      credentials: true,
     },
   });
   const globalPrefix = '';
