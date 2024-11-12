@@ -84,7 +84,7 @@ export class AuthService {
           accessToken: accessToken,
           accountId: user._id as string,
         });
-        return { accessToken };
+        return { accessToken, email: user.email, username: user.username };
       } else {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }

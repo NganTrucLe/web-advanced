@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from '../../libs/guards/jwt-auth.guard';
 import { CurrentUser } from '../../libs/decorators';
 
-@Controller('user')
+@Controller('')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('register')
@@ -12,13 +12,13 @@ export class AuthController {
     return this.authService.registerUser(data);
   }
 
-  @Post('log-in')
+  @Post('login')
   async logIn(@Body() data: LogInDto) {
     const { email, password } = data;
     return this.authService.loginUser(email, password);
   }
 
-  @Get('')
+  @Get('profile')
   @UseGuards(JwtAuthGuard)
   async getUser(
     @CurrentUser() user: { userId: string; email: string; username: string },

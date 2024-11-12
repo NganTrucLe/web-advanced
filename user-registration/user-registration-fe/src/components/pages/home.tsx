@@ -1,29 +1,22 @@
-import { LogOut } from "lucide-react";
-import { useRef } from "react";
+import { Link } from "@tanstack/react-router";
 
 import { useSignOut, useUserProfile } from "@/hooks/react-query/useAuth";
+import { useAuthStore } from "@/hooks/useAuthStore";
+import { getAuthValueFromStorage } from "@/services";
 
 import { Button } from "../ui";
-import Confetti, { ConfettiRef } from "../ui/confetti";
 
-const WelcomeMessage = ({ username }: { username: string }) => {
-  const confettiRef = useRef<ConfettiRef>(null);
-  return (
-    <>
-      <div className="text-center text-2xl font-bold">Welcome to the home page, {username}!</div>
-      <Confetti
-        ref={confettiRef}
-        className="absolute left-0 top-0 -z-10 size-full"
-        onMouseEnter={() => {
-          confettiRef.current?.fire({});
-        }}
-      />
-    </>
-  );
-};
 export default function HomePage() {
   const signOut = useSignOut();
   const { data, isError, isLoading } = useUserProfile();
+  const { accessToken, setAccessToken } = useAuthStore();
+
+  if (!accessToken) {
+    const token = getAuthValueFromStorage()?.accessToken;
+    if (token) {
+      setAccessToken(token);
+    }
+  }
 
   if (isError) {
     signOut.mutate();
@@ -34,12 +27,22 @@ export default function HomePage() {
       {isLoading ? (
         <div className="text-center text-2xl font-bold">Loading... </div>
       ) : (
-        data && <WelcomeMessage username={data.username || ""} />
+        data && (
+          <>
+            <div className="text-center text-2xl font-bold">
+              Welcome to the home page, {data.username}!
+            </div>
+            {accessToken ? (
+              <div>Access token founded</div>
+            ) : (
+              <div>Access token not found, requesting...</div>
+            )}
+          </>
+        )
       )}
-      <Button onClick={() => signOut.mutate()} variant="link" className="text-destructive">
-        Sign Out
-        <LogOut className="ml-2 size-4" />
-      </Button>
+      <Link to="/profile">
+        <Button>Go to profile</Button>
+      </Link>
     </main>
   );
 }

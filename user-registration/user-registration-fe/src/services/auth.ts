@@ -30,13 +30,13 @@ export const getAuthValueFromStorage = () => {
 };
 
 export const signIn = async (params: SignInParams) => {
-  const data = await apiAuth.post("user/log-in", { json: params }).json<AuthInfo>();
+  const data = await apiAuth.post("login", { json: params }).json<AuthInfo>();
   localStorage.setItem(localStorageTokenKey, JSON.stringify(data));
   return data;
 };
 
 export const signUp = async (params: SignUpParams) => {
-  const data = await apiAuth.post("user/register", { json: params }).json<AuthInfo>();
+  const data = await apiAuth.post("register", { json: params }).json<AuthInfo>();
   localStorage.setItem(localStorageTokenKey, JSON.stringify(data));
   return data;
 };
@@ -51,5 +51,5 @@ export const signOut = () => {
 };
 
 export const getUser = async () => {
-  return api.get("user").json<AuthUser>();
+  return api.get("profile").json<AuthUser>();
 };

@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 
-import { getUser, signIn, signUp } from "@/services/auth";
+import { getUser, signIn, signOut, signUp } from "@/services/auth";
 
 import { useToast } from "../use-toast";
+import { useAuthStore } from "../useAuthStore";
 
 export const authKeys = {
   key: ["authUser"] as const,
@@ -13,11 +14,13 @@ export const authKeys = {
 export const useSignIn = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { setAccessToken } = useAuthStore();
   return useMutation({
     mutationFn: signIn,
-    onSuccess: () => {
+    onSuccess: (data) => {
       // const authUser = getAuthUser();
       // queryClient.setQueryData(authKeys.detail(), authUser);
+      setAccessToken(data.accessToken);
       navigate({ to: "/" });
       toast({
         title: "Success",
@@ -62,10 +65,12 @@ export const useSignOut = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { clearAccessToken } = useAuthStore();
   return useMutation({
-    mutationFn: async () => {},
+    mutationFn: signOut,
     onSuccess: () => {
       navigate({ to: "/log-in" });
+      clearAccessToken();
       queryClient.clear();
     },
     onError: (error) => {

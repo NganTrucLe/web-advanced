@@ -13,7 +13,6 @@ export const Route = createFileRoute("/_authenticated")({
       if (!getAuthValueFromStorage()) {
         return redirect({ to: "/log-in" });
       }
-      console.log(location.pathname);
       if (location.pathname === "/log-in" || location.pathname === "/sign-up") {
         return redirect({ to: "/" });
       }

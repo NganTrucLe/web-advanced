@@ -16,6 +16,7 @@ import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as AuthenticatedIndexImport } from './routes/_authenticated/index'
 import { Route as AuthenticationSignUpImport } from './routes/_authentication/sign-up'
 import { Route as AuthenticationLogInImport } from './routes/_authentication/log-in'
+import { Route as AuthenticatedProfileImport } from './routes/_authenticated/profile'
 
 // Create/Update Routes
 
@@ -44,6 +45,11 @@ const AuthenticationLogInRoute = AuthenticationLogInImport.update({
   getParentRoute: () => AuthenticationRoute,
 } as any)
 
+const AuthenticatedProfileRoute = AuthenticatedProfileImport.update({
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -61,6 +67,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthenticationImport
       parentRoute: typeof rootRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileImport
+      parentRoute: typeof AuthenticatedImport
     }
     '/_authentication/log-in': {
       id: '/_authentication/log-in'
@@ -89,10 +102,12 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 
@@ -116,6 +131,7 @@ const AuthenticationRouteWithChildren = AuthenticationRoute._addFileChildren(
 
 export interface FileRoutesByFullPath {
   '': typeof AuthenticationRouteWithChildren
+  '/profile': typeof AuthenticatedProfileRoute
   '/log-in': typeof AuthenticationLogInRoute
   '/sign-up': typeof AuthenticationSignUpRoute
   '/': typeof AuthenticatedIndexRoute
@@ -123,6 +139,7 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '': typeof AuthenticationRouteWithChildren
+  '/profile': typeof AuthenticatedProfileRoute
   '/log-in': typeof AuthenticationLogInRoute
   '/sign-up': typeof AuthenticationSignUpRoute
   '/': typeof AuthenticatedIndexRoute
@@ -132,6 +149,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_authentication': typeof AuthenticationRouteWithChildren
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authentication/log-in': typeof AuthenticationLogInRoute
   '/_authentication/sign-up': typeof AuthenticationSignUpRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
@@ -139,13 +157,14 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/log-in' | '/sign-up' | '/'
+  fullPaths: '' | '/profile' | '/log-in' | '/sign-up' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '' | '/log-in' | '/sign-up' | '/'
+  to: '' | '/profile' | '/log-in' | '/sign-up' | '/'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_authentication'
+    | '/_authenticated/profile'
     | '/_authentication/log-in'
     | '/_authentication/sign-up'
     | '/_authenticated/'
@@ -181,6 +200,7 @@ export const routeTree = rootRoute
     "/_authenticated": {
       "filePath": "_authenticated.tsx",
       "children": [
+        "/_authenticated/profile",
         "/_authenticated/"
       ]
     },
@@ -190,6 +210,10 @@ export const routeTree = rootRoute
         "/_authentication/log-in",
         "/_authentication/sign-up"
       ]
+    },
+    "/_authenticated/profile": {
+      "filePath": "_authenticated/profile.tsx",
+      "parent": "/_authenticated"
     },
     "/_authentication/log-in": {
       "filePath": "_authentication/log-in.tsx",
